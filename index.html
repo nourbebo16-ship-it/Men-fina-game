@@ -2,119 +2,343 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مين فينا؟</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
-margin:0;min-height:100vh;
+margin:0;
+min-height:100vh;
 font-family:Arial,Tahoma,sans-serif;
 background:linear-gradient(135deg,#100b2d,#4c1d95,#be185d);
-color:#fff
+color:#fff;
 }
-.app{width:min(100%,560px);margin:auto;padding:18px}
-.screen{display:none;min-height:calc(100vh - 36px);align-content:center}
-.screen.active{display:grid;animation:show .3s ease}
-@keyframes show{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.logo{text-align:center;font-size:clamp(48px,14vw,75px);font-weight:900}
-.sub{text-align:center;color:#ddd;line-height:1.7;margin:5px 0 22px}
+
+.app{
+width:min(100%,560px);
+margin:auto;
+padding:18px;
+}
+
+.screen{
+display:none;
+min-height:calc(100vh - 36px);
+align-content:center;
+}
+
+.screen.active{
+display:grid;
+animation:show .3s ease;
+}
+
+@keyframes show{
+from{opacity:0;transform:translateY(12px)}
+to{opacity:1;transform:none}
+}
+
+.logo{
+text-align:center;
+font-size:clamp(48px,14vw,75px);
+font-weight:900;
+}
+
+.sub{
+text-align:center;
+color:#ddd;
+line-height:1.7;
+margin:5px 0 22px;
+}
+
 .card{
 background:rgba(0,0,0,.28);
 border:1px solid rgba(255,255,255,.14);
-border-radius:25px;padding:22px;
-box-shadow:0 18px 50px #0005
+border-radius:25px;
+padding:22px;
+box-shadow:0 18px 50px #0005;
 }
-h2{font-size:18px;margin:4px 0 12px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+h2{
+font-size:18px;
+margin:4px 0 12px;
+}
+
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
 button{
 border:1px solid #ffffff18;
-background:#191532;color:white;
-border-radius:15px;padding:15px;
-font-size:16px;font-weight:800;cursor:pointer;
-transition:.15s
+background:#191532;
+color:white;
+border-radius:15px;
+padding:15px;
+font-size:16px;
+font-weight:800;
+cursor:pointer;
+transition:.15s;
 }
-button:active{transform:scale(.97)}
-button.selected{background:#7c3aed;border-color:#c4b5fd}
+
+button:active{
+transform:scale(.97);
+}
+
+button.selected{
+background:#7c3aed;
+border-color:#c4b5fd;
+}
+
 .start{
-width:100%;border:0;
+width:100%;
+border:0;
 background:linear-gradient(135deg,#7c3aed,#ec4899);
-font-size:19px;margin-top:20px
+font-size:19px;
+margin-top:20px;
 }
-.levels{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.level{text-align:right}
-.level small{display:block;color:#bbb;margin-top:5px}
-.level.locked{opacity:.55}
-.top{display:flex;justify-content:space-between;align-items:center;font-weight:800;margin-bottom:10px}
-.back{padding:8px 12px;font-size:13px}
-.progress{height:8px;background:#ffffff22;border-radius:20px;overflow:hidden;margin-bottom:18px}
-.bar{height:100%;width:0;background:#fff;transition:.3s}
-.badge{display:inline-block;background:#7c3aed;padding:7px 12px;border-radius:99px;font-size:12px;font-weight:900}
-.question{text-align:center;font-size:clamp(26px,7vw,38px);line-height:1.5;margin:22px 0}
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.answer{min-height:65px;background:#111026}
-.answer:active{background:#7c3aed}
-.note{text-align:center;color:#aaa;font-size:13px;margin-top:15px}
-.result{text-align:center}
-.trophy{font-size:60px}
-.score{font-size:58px;font-weight:900;margin:5px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:20px 0}
-.stat{background:#111026;border-radius:14px;padding:12px}
-.stat b{display:block;font-size:20px}
-.stat small{color:#aaa}
-.secondary{width:100%;margin-top:10px}
+
+.levels{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.level{
+text-align:right;
+}
+
+.level small{
+display:block;
+color:#bbb;
+margin-top:5px;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-weight:800;
+margin-bottom:10px;
+}
+
+.back{
+padding:8px 12px;
+font-size:13px;
+}
+
+.progress{
+height:8px;
+background:#ffffff22;
+border-radius:20px;
+overflow:hidden;
+margin-bottom:18px;
+}
+
+.bar{
+height:100%;
+width:0;
+background:#fff;
+transition:.3s;
+}
+
+.badge{
+display:inline-block;
+background:#7c3aed;
+padding:7px 12px;
+border-radius:99px;
+font-size:12px;
+font-weight:900;
+}
+
+.question{
+text-align:center;
+font-size:clamp(26px,7vw,38px);
+line-height:1.5;
+margin:22px 0;
+}
+
+.answers{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.answer{
+min-height:65px;
+background:#111026;
+}
+
+.note{
+text-align:center;
+color:#aaa;
+font-size:13px;
+margin-top:15px;
+}
+
+.result{
+text-align:center;
+}
+
+.trophy{
+font-size:60px;
+}
+
+.score{
+font-size:58px;
+font-weight:900;
+margin:5px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin:20px 0;
+}
+
+.stat{
+background:#111026;
+border-radius:14px;
+padding:12px;
+}
+
+.stat b{
+display:block;
+font-size:20px;
+}
+
+.stat small{
+color:#aaa;
+}
+
+.secondary{
+width:100%;
+margin-top:10px;
+}
+
 @media(max-width:390px){
-.answers,.levels{grid-template-columns:1fr}
+.answers,.levels{
+grid-template-columns:1fr;
+}
 }
 </style>
 </head>
 
 <body>
+
 <main class="app">
 
 <section id="home" class="screen active">
+
 <div class="logo">مين فينا؟</div>
-<p class="sub">اختاروا مين ينطبق عليه السؤال 🔥<br>وخلّوا الجولة تكشف مين أكتر واحد!</p>
+
+<p class="sub">
+اختاروا مين ينطبق عليه السؤال 🔥<br>
+وخلّوا الجولة تكشف مين أكتر واحد!
+</p>
 
 <div class="card">
 
 <h2>عدد أسئلة الجولة</h2>
+
 <div class="grid2">
-<button class="count selected" data-count="6">6 أسئلة</button>
-<button class="count" data-count="10">10 أسئلة</button>
+
+<button class="count selected" data-count="6">
+6 أسئلة
+</button>
+
+<button class="count" data-count="10">
+10 أسئلة
+</button>
+
 </div>
 
-<h2 style="margin-top:22px">اختار المرحلة</h2>
-<div class="levels" id="levels"></div>
+<h2 style="margin-top:22px">
+اختار المرحلة
+</h2>
 
-<button class="start" id="start">ابدأ الجولة 🚀</button>
+<div class="levels">
+
+<button class="level selected" data-level="1">
+🟢 المستوى 1
+<small>أسئلة خفيفة</small>
+</button>
+
+<button class="level" data-level="2">
+🟡 المستوى 2
+<small>محتاج تفكير</small>
+</button>
+
+<button class="level" data-level="3">
+🟠 المستوى 3
+<small>صعب</small>
+</button>
+
+<button class="level" data-level="4">
+🔴 المستوى 4
+<small>تحدي</small>
+</button>
+
+<button class="level" data-level="5">
+🔥 المستوى 5
+<small>أسطوري</small>
+</button>
 
 </div>
+
+<button class="start" id="start">
+ابدأ الجولة 🚀
+</button>
+
+</div>
+
 </section>
 
 
 <section id="game" class="screen">
 
 <div class="top">
-<button class="back" id="quit">خروج</button>
-<span id="progressText">1 / 6</span>
-<strong id="roundPoints">0 نقطة</strong>
+
+<button class="back" id="quit">
+خروج
+</button>
+
+<span id="progressText">
+1 / 6
+</span>
+
+<strong id="roundPoints">
+0 نقطة
+</strong>
+
 </div>
 
 <div class="progress">
+
 <div class="bar" id="bar"></div>
+
 </div>
 
 <div class="card">
+
 <div style="text-align:center">
-<span class="badge" id="badge">سهل</span>
+
+<span class="badge" id="badge">
+سهل
+</span>
+
 </div>
 
 <div class="question" id="question"></div>
 
 <div class="answers" id="answers"></div>
 
-<div class="note">النتيجة مش هتظهر غير في نهاية الجولة 👀</div>
+<div class="note">
+النتيجة مش هتظهر غير في نهاية الجولة 👀
+</div>
+
 </div>
 
 </section>
@@ -123,23 +347,50 @@ font-size:19px;margin-top:20px
 <section id="result" class="screen">
 
 <div class="card result">
-<div class="trophy">🏆</div>
-<h1>خلصت الجولة!</h1>
 
-<div class="score" id="finalScore">0</div>
+<div class="trophy">
+🏆
+</div>
+
+<h1>
+خلصت الجولة!
+</h1>
+
+<div class="score" id="finalScore">
+0
+</div>
 
 <p id="message"></p>
 
 <div class="stats">
-<div class="stat"><b id="statQuestions">0</b><small>أسئلة</small></div>
-<div class="stat"><b id="statLevel">1</b><small>المستوى</small></div>
-<div class="stat"><b id="statBest">0</b><small>أفضل نتيجة</small></div>
+
+<div class="stat">
+<b id="statQuestions">0</b>
+<small>أسئلة</small>
 </div>
 
-<button class="start" id="again">🔄 جولة جديدة</button>
-<button class="secondary" id="home">🏠 الرئيسية</button>
+<div class="stat">
+<b id="statLevel">1</b>
+<small>المستوى</small>
+</div>
+
+<div class="stat">
+<b id="statBest">0</b>
+<small>أفضل نتيجة</small>
+</div>
 
 </div>
+
+<button class="start" id="again">
+🔄 جولة جديدة
+</button>
+
+<button class="secondary" id="home">
+🏠 الرئيسية
+</button>
+
+</div>
+
 </section>
 
 </main>
@@ -147,257 +398,475 @@ font-size:19px;margin-top:20px
 
 <script>
 
-const LEVELS=[
-{id:1,name:"البداية",desc:"أسئلة خفيفة",icon:"🟢"},
-{id:2,name:"المتوسط",desc:"محتاج تفكير",icon:"🟡"},
-{id:3,name:"الصعب",desc:"اختيارات tricky",icon:"🟠"},
-{id:4,name:"التحدي",desc:"أسئلة قوية",icon:"🔴"},
-{id:5,name:"الأسطوري",desc:"أقصى صعوبة",icon:"🔥"}
-];
+/* =========================
+   إعداد اللعبة
+========================= */
+
+let count = 6;
+let level = 1;
+let round = [];
+let current = 0;
+let score = 0;
 
 
-/* بنك الأسئلة */
+/* =========================
+   بنك الأسئلة
+========================= */
 
-const QUESTIONS=[
+const QUESTIONS = [
 
 /* المستوى 1 */
 
-[1,"مين فينا أكتر واحد بيتأخر على المواعيد؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[1,"مين فينا بيحب النوم أكتر؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[1,"مين فينا بيحب الأكل أكتر؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[1,"مين فينا بيضحك أسرع؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[1,"مين فينا بيسهر أكتر؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[1,"مين فينا بينسى حاجته أكتر؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[1,"مين فينا بيرد على الرسائل أسرع؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[1,"مين فينا ممكن يطلب أكل وهو لسه واكل؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[1,"مين فينا بيحب التصوير أكتر؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[1,"مين فينا بيتفرج على فيديوهات أكتر؟",["أنا","إنت","الاتنين","ولا واحد"]],
+{
+level:1,
+text:"مين فينا أكتر واحد بيتأخر على المواعيد؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:1,
+text:"مين فينا بيحب النوم أكتر؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:1,
+text:"مين فينا بيحب الأكل أكتر؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:1,
+text:"مين فينا بيضحك أسرع؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:1,
+text:"مين فينا بيسهر أكتر؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:1,
+text:"مين فينا بينسى حاجته أكتر؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:1,
+text:"مين فينا بيرد على الرسائل أسرع؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:1,
+text:"مين فينا ممكن يطلب أكل وهو لسه واكل؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
 
 /* المستوى 2 */
 
-[2,"مين فينا لو كسب فلوس فجأة هيصرفها أسرع؟",["أنا","إنت","الاتنين","حسب المبلغ"]],
-[2,"مين فينا ممكن يغيّر رأيه أسرع؟",["أنا","إنت","الاتنين","حسب الموضوع"]],
-[2,"مين فينا يقدر يحفظ سر لفترة أطول؟",["أنا","إنت","الاتنين","مش مضمون"]],
-[2,"مين فينا ممكن يبدأ مشروع ويزهق منه؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[2,"مين فينا يحكم على الشخص من أول مقابلة؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[2,"مين فينا ممكن يسافر من غير خطة؟",["أنا","إنت","الاتنين","حسب المكان"]],
-[2,"مين فينا يلاقي حل أسرع وقت الزنقة؟",["أنا","إنت","الاتنين","حسب الموقف"]],
-[2,"مين فينا يشتري حاجة مش محتاجها عشان عليها خصم؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[2,"مين فينا ممكن يصدق إشاعة بسرعة؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[2,"مين فينا ممكن يغيّر خطته في آخر لحظة؟",["أنا","إنت","الاتنين","ولا واحد"]],
+{
+level:2,
+text:"مين فينا لو كسب فلوس فجأة هيصرفها أسرع؟",
+answers:["أنا","إنت","الاتنين","حسب المبلغ"]
+},
+
+{
+level:2,
+text:"مين فينا ممكن يغير رأيه أسرع؟",
+answers:["أنا","إنت","الاتنين","حسب الموضوع"]
+},
+
+{
+level:2,
+text:"مين فينا يقدر يحفظ سر لفترة أطول؟",
+answers:["أنا","إنت","الاتنين","مش مضمون"]
+},
+
+{
+level:2,
+text:"مين فينا ممكن يبدأ مشروع ويزهق منه؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:2,
+text:"مين فينا ممكن يسافر من غير خطة؟",
+answers:["أنا","إنت","الاتنين","حسب المكان"]
+},
+
+{
+level:2,
+text:"مين فينا يشتري حاجة مش محتاجها عشان عليها خصم؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
 
 /* المستوى 3 */
 
-[3,"مين فينا ممكن يقول الحقيقة حتى لو هتعمل مشكلة؟",["أنا","إنت","الاتنين","حسب الموقف"]],
-[3,"مين فينا أصعب في الاعتذار حتى لو غلطان؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[3,"مين فينا ممكن يضحي بمصلحته عشان صاحبه؟",["أنا","إنت","الاتنين","مش دايمًا"]],
-[3,"مين فينا لو فشل هيرجع يحاول تاني؟",["أنا","إنت","الاتنين","حسب الفشل"]],
-[3,"مين فينا ممكن يرفض حاجة كويسة عشان مبدأ؟",["أنا","إنت","الاتنين","حسب الحاجة"]],
-[3,"مين فينا بيقدر يفضل هادي وقت الخناقة؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[3,"مين فينا يكتشف الكذب من تفاصيل صغيرة؟",["أنا","إنت","الاتنين","مش دايمًا"]],
-[3,"مين فينا ممكن يختار الصعب بدل السهل؟",["أنا","إنت","الاتنين","حسب الهدف"]],
-[3,"مين فينا أصعب في تغيير رأيه؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[3,"مين فينا ممكن يفضل ساكت رغم إنه عارف الحقيقة؟",["أنا","إنت","الاتنين","حسب الموقف"]],
+{
+level:3,
+text:"مين فينا ممكن يقول الحقيقة حتى لو هتعمل مشكلة؟",
+answers:["أنا","إنت","الاتنين","حسب الموقف"]
+},
+
+{
+level:3,
+text:"مين فينا أصعب في الاعتذار حتى لو غلطان؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:3,
+text:"مين فينا ممكن يضحي بمصلحته عشان صاحبه؟",
+answers:["أنا","إنت","الاتنين","مش دايمًا"]
+},
+
+{
+level:3,
+text:"مين فينا لو فشل هيرجع يحاول تاني؟",
+answers:["أنا","إنت","الاتنين","حسب الفشل"]
+},
+
+{
+level:3,
+text:"مين فينا بيقدر يفضل هادي وقت الخناقة؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:3,
+text:"مين فينا أصعب في تغيير رأيه؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
 
 /* المستوى 4 */
 
-[4,"مين فينا ممكن يرفض فرصة ممتازة لو ضد مبادئه؟",["أنا","إنت","الاتنين","حسب الفرصة"]],
-[4,"مين فينا ممكن يغير حياته بقرار واحد؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[4,"مين فينا ممكن يكسب نقاش وهو مش الصح؟",["أنا","إنت","الاتنين","الاتنين ممكن"]],
-[4,"مين فينا يقدر يخبي مشاعره أحسن؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[4,"مين فينا ممكن يختار الحقيقة على راحته؟",["أنا","إنت","الاتنين","حسب الحقيقة"]],
-[4,"مين فينا ممكن يقطع علاقة لو الثقة راحت؟",["أنا","إنت","الاتنين","حسب العلاقة"]],
-[4,"مين فينا ممكن يخاطر بحاجة مضمونة؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[4,"مين فينا لو خسر مرة ممكن يخبي الموضوع عن الكل؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[4,"مين فينا ممكن يغير رأيه بسبب دليل قوي جدًا؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[4,"مين فينا ممكن يعمل حاجة كبيرة من غير ما يقول لحد؟",["أنا","إنت","الاتنين","حسب الحاجة"]],
+{
+level:4,
+text:"مين فينا ممكن يرفض فرصة ممتازة لو ضد مبادئه؟",
+answers:["أنا","إنت","الاتنين","حسب الفرصة"]
+},
+
+{
+level:4,
+text:"مين فينا ممكن يغير حياته بقرار واحد؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:4,
+text:"مين فينا ممكن يكسب نقاش وهو مش الصح؟",
+answers:["أنا","إنت","الاتنين","الاتنين ممكن"]
+},
+
+{
+level:4,
+text:"مين فينا يقدر يخبي مشاعره أحسن؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:4,
+text:"مين فينا ممكن يختار الحقيقة على راحته؟",
+answers:["أنا","إنت","الاتنين","حسب الحقيقة"]
+},
+
+{
+level:4,
+text:"مين فينا ممكن يقطع علاقة لو الثقة راحت؟",
+answers:["أنا","إنت","الاتنين","حسب العلاقة"]
+},
+
 
 /* المستوى 5 */
 
-[5,"مين فينا ممكن يختار خسارة النهارده عشان يكسب بعد سنة؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[5,"مين فينا ممكن يواجه الكل لو شايفهم غلط؟",["أنا","إنت","الاتنين","حسب الموضوع"]],
-[5,"مين فينا أصعب شخص تتوقع رد فعله؟",["أنا","إنت","الاتنين","الاتنين"]],
-[5,"مين فينا ممكن يضحي بفرصة كبيرة عشان شخص مهم؟",["أنا","إنت","الاتنين","حسب الشخص"]],
-[5,"مين فينا ممكن يبدأ من الصفر لو فقد كل حاجة؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[5,"مين فينا يقدر يختار قرار مؤلم لو شايف إنه الصح؟",["أنا","إنت","الاتنين","حسب القرار"]],
-[5,"مين فينا ممكن يخاطر بمستقبله عشان حلمه؟",["أنا","إنت","الاتنين","حسب الحلم"]],
-[5,"مين فينا ممكن يغير حياته من غير ما يستشير حد؟",["أنا","إنت","الاتنين","ولا واحد"]],
-[5,"مين فينا ممكن يحتفظ بسر كبير سنين؟",["أنا","إنت","الاتنين","مش مضمون"]],
-[5,"مين فينا ممكن يختار الطريق الأصعب لو شايف إنه الصح؟",["أنا","إنت","الاتنين","حسب الموقف"]]
+{
+level:5,
+text:"مين فينا ممكن يختار خسارة النهارده عشان يكسب بعد سنة؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:5,
+text:"مين فينا ممكن يواجه الكل لو شايفهم غلط؟",
+answers:["أنا","إنت","الاتنين","حسب الموضوع"]
+},
+
+{
+level:5,
+text:"مين فينا أصعب شخص تتوقع رد فعله؟",
+answers:["أنا","إنت","الاتنين","الاتنين"]
+},
+
+{
+level:5,
+text:"مين فينا ممكن يضحي بفرصة كبيرة عشان شخص مهم؟",
+answers:["أنا","إنت","الاتنين","حسب الشخص"]
+},
+
+{
+level:5,
+text:"مين فينا ممكن يبدأ من الصفر لو فقد كل حاجة؟",
+answers:["أنا","إنت","الاتنين","ولا واحد"]
+},
+
+{
+level:5,
+text:"مين فينا ممكن يحتفظ بسر كبير سنين؟",
+answers:["أنا","إنت","الاتنين","مش مضمون"]
+}
 
 ];
 
 
-let count=6;
-let level=1;
-let round=[];
-let current=0;
-let score=0;
+/* =========================
+   أدوات
+========================= */
 
+function shuffle(array){
 
-/* إنشاء المستويات */
-
-function renderLevels(){
-
-const box=document.getElementById("levels");
-
-box.innerHTML=LEVELS.map(l=>`
-<button class="level ${l.id===1?"selected":""}" data-level="${l.id}">
-${l.icon} المستوى ${l.id}
-<small>${l.name} — ${l.desc}</small>
-</button>
-`).join("");
-
-document.querySelectorAll(".level").forEach(btn=>{
-
-btn.onclick=()=>{
-
-document.querySelectorAll(".level")
-.forEach(x=>x.classList.remove("selected"));
-
-btn.classList.add("selected");
-
-level=Number(btn.dataset.level);
-
-};
-
-});
+return [...array].sort(
+()=>Math.random()-0.5
+);
 
 }
 
 
-/* عدد الأسئلة */
+function showScreen(id){
 
-document.querySelectorAll(".count").forEach(btn=>{
+document
+.querySelectorAll(".screen")
+.forEach(screen=>{
+screen.classList.remove("active");
+});
 
-btn.onclick=()=>{
+document
+.getElementById(id)
+.classList.add("active");
 
-document.querySelectorAll(".count")
-.forEach(x=>x.classList.remove("selected"));
+}
 
-btn.classList.add("selected");
 
-count=Number(btn.dataset.count);
+/* =========================
+   اختيار عدد الأسئلة
+========================= */
 
-};
+document
+.querySelectorAll(".count")
+.forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+document
+.querySelectorAll(".count")
+.forEach(x=>{
+x.classList.remove("selected");
+});
+
+button.classList.add("selected");
+
+count =
+Number(button.dataset.count);
+
+});
 
 });
 
 
-/* خلط */
+/* =========================
+   اختيار المستوى
+========================= */
 
-function shuffle(a){
-return [...a].sort(()=>Math.random()-.5);
-}
+document
+.querySelectorAll(".level")
+.forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+document
+.querySelectorAll(".level")
+.forEach(x=>{
+x.classList.remove("selected");
+});
+
+button.classList.add("selected");
+
+level =
+Number(button.dataset.level);
+
+});
+
+});
 
 
-/* بدء الجولة */
+/* =========================
+   بداية الجولة
+========================= */
 
 function startGame(){
 
-const available=QUESTIONS
-.filter(q=>q[0]<=level);
-
-const exact=shuffle(
-available.filter(q=>q[0]===level)
-);
-
-const lower=shuffle(
-available.filter(q=>q[0]<level)
+let pool =
+QUESTIONS.filter(
+question=>question.level<=level
 );
 
 
 /*
-نرفع نسبة الأسئلة الصعبة
-كلما زاد المستوى.
+كلما زاد المستوى،
+نزود نسبة الأسئلة من نفس المستوى.
 */
 
-let wanted=Math.ceil(count*.7);
+let exact =
+shuffle(
+pool.filter(
+question=>question.level===level
+)
+);
 
-round=[
-...exact.slice(0,wanted),
+let lower =
+shuffle(
+pool.filter(
+question=>question.level<level
+)
+);
+
+
+let exactCount =
+Math.ceil(count*0.7);
+
+
+round =
+[
+...exact.slice(0,exactCount),
 ...lower
-].slice(0,count);
+];
 
-
-/* ضمان العدد */
 
 if(round.length<count){
-round=shuffle(available).slice(0,count);
+
+round =
+shuffle(pool);
 }
 
-round=shuffle(round);
+
+round =
+shuffle(round).slice(0,count);
+
 
 current=0;
 score=0;
 
-show("game");
+showScreen("game");
 
 showQuestion();
 
 }
 
 
-/* السؤال */
+/* =========================
+   عرض السؤال
+========================= */
 
 function showQuestion(){
 
-const q=round[current];
+let question =
+round[current];
 
-document.getElementById("progressText")
-.textContent=`السؤال ${current+1} / ${round.length}`;
+let difficulty =
+[
+"",
+"سهل",
+"متوسط",
+"صعب",
+"تحدي",
+"أسطوري"
+];
 
-document.getElementById("roundPoints")
-.textContent=`${score} نقطة`;
 
-document.getElementById("bar")
-.style.width=`${current/round.length*100}%`;
+document
+.getElementById("progressText")
+.textContent =
+`السؤال ${current+1} / ${round.length}`;
 
-const names=["","سهل","متوسط","صعب","تحدي","أسطوري"];
 
-document.getElementById("badge")
-.textContent=names[q[0]];
+document
+.getElementById("roundPoints")
+.textContent =
+`${score} نقطة`;
 
-document.getElementById("question")
-.textContent=q[1];
 
-const box=document.getElementById("answers");
+document
+.getElementById("bar")
+.style.width =
+`${current/round.length*100}%`;
 
-box.innerHTML="";
 
-shuffle(q[2]).forEach(answer=>{
+document
+.getElementById("badge")
+.textContent =
+difficulty[question.level];
 
-const b=document.createElement("button");
 
-b.className="answer";
+document
+.getElementById("question")
+.textContent =
+question.text;
 
-b.textContent=answer;
 
-b.onclick=()=>answerQuestion(q);
+let answers =
+document.getElementById("answers");
 
-box.appendChild(b);
+
+answers.innerHTML="";
+
+
+shuffle(question.answers)
+.forEach(answer=>{
+
+let button =
+document.createElement("button");
+
+button.className="answer";
+
+button.textContent=answer;
+
+button.addEventListener(
+"click",
+()=>{
+answerQuestion(question)
+}
+);
+
+answers.appendChild(button);
 
 });
 
 }
 
 
-/* الإجابة */
+/* =========================
+   الإجابة
+========================= */
 
-function answerQuestion(q){
+function answerQuestion(question){
 
 /*
-النقاط لا تظهر للمستخدم.
-المستوى الأعلى يعطي قيمة أكبر.
+النقاط مخفية حتى نهاية الجولة.
 */
 
-score+=q[0]*10;
+score += question.level * 10;
 
 current++;
 
+
 if(current>=round.length){
 
-finish();
+finishGame();
 
 }else{
 
@@ -408,105 +877,135 @@ showQuestion();
 }
 
 
-/* النهاية */
+/* =========================
+   النتيجة
+========================= */
 
-function finish(){
+function finishGame(){
 
-document.getElementById("bar").style.width="100%";
+document
+.getElementById("bar")
+.style.width="100%";
 
-const best=Number(
-localStorage.getItem("menFinaBest")||0
+
+let best =
+Number(
+localStorage.getItem("menFinaBest") || 0
 );
 
+
 if(score>best){
-localStorage.setItem("menFinaBest",score);
+
+localStorage.setItem(
+"menFinaBest",
+score
+);
+
+best=score;
+
 }
 
-const newBest=Math.max(score,best);
 
-document.getElementById("finalScore")
-.textContent=score+" نقطة";
+document
+.getElementById("finalScore")
+.textContent =
+`${score} نقطة`;
 
-document.getElementById("statQuestions")
-.textContent=round.length;
 
-document.getElementById("statLevel")
-.textContent=level;
+document
+.getElementById("statQuestions")
+.textContent =
+round.length;
 
-document.getElementById("statBest")
-.textContent=newBest;
 
-let msg;
+document
+.getElementById("statLevel")
+.textContent =
+level;
 
-if(level===5 && score>=level*10*round.length*.9){
-msg="🔥 أسطوري! أنت دخلت أصعب مستوى وكسرت الجولة!";
-}else if(level>=4){
-msg="😈 مستوى قوي جدًا! جرب تكسر نتيجتك.";
-}else if(level>=3){
-msg="🔥 ممتاز! جاهز للتحدي الأكبر؟";
+
+document
+.getElementById("statBest")
+.textContent =
+best;
+
+
+let message;
+
+if(level===5){
+
+message="🔥 أسطوري! وصلت لأعلى مستوى.";
+
+}else if(level===4){
+
+message="😈 قوي جدًا! جاهز للأسطوري؟";
+
+}else if(level===3){
+
+message="🔥 ممتاز! لسه في مستويات أصعب.";
+
+}else if(level===2){
+
+message="👏 كويس جدًا! جرب مستوى أعلى.";
+
 }else{
-msg="👏 بداية قوية! جرّب مستوى أعلى.";
-}
 
-document.getElementById("message").textContent=msg;
-
-show("result");
+message="😎 بداية حلوة! ارفع المستوى.";
 
 }
 
 
-/* التنقل */
+document
+.getElementById("message")
+.textContent =
+message;
 
-function show(id){
 
-document.querySelectorAll(".screen")
-.forEach(s=>s.classList.remove("active"));
-
-document.getElementById(id).classList.add("active");
+showScreen("result");
 
 }
 
-document.getElementById("start").onclick=startGame;
 
-document.getElementById("again").onclick=startGame;
+/* =========================
+   الأزرار
+========================= */
 
-document.getElementById("home").onclick=()=>show("home");
+document
+.getElementById("start")
+.addEventListener(
+"click",
+startGame
+);
 
-document.getElementById("quit").onclick=()=>show("home");
 
-renderLevels();
+document
+.getElementById("again")
+.addEventListener(
+"click",
+startGame
+);
 
-</script>document.addEventListener("DOMContentLoaded", function () {
 
-  renderLevels();
+document
+.getElementById("home")
+.addEventListener(
+"click",
+()=>{
+showScreen("home");
+}
+);
 
-  document.querySelectorAll(".count").forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      document.querySelectorAll(".count").forEach(function(x) {
-        x.classList.remove("selected");
-      });
 
-      btn.classList.add("selected");
-      count = Number(btn.dataset.count);
-    });
-  });
+document
+.getElementById("quit")
+.addEventListener(
+"click",
+()=>{
+showScreen("home");
+}
+);
 
-  document.getElementById("start").addEventListener("click", function() {
-    startGame();
-  });
+</script>
 
-  document.getElementById("again").addEventListener("click", function() {
-    startGame();
-  });
-
-  document.getElementById("home").addEventListener("click", function() {
-    show("home");
-  });
-
-  document.getElementById("quit").addEventListener("click", function() {
-    show("home");
-  });
-
-});
 </body>
-</html>
+  </html>
