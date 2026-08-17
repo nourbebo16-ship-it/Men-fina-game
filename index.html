@@ -476,6 +476,37 @@ document.getElementById("quit").onclick=()=>show("home");
 
 renderLevels();
 
-</script>
+</script>document.addEventListener("DOMContentLoaded", function () {
+
+  renderLevels();
+
+  document.querySelectorAll(".count").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      document.querySelectorAll(".count").forEach(function(x) {
+        x.classList.remove("selected");
+      });
+
+      btn.classList.add("selected");
+      count = Number(btn.dataset.count);
+    });
+  });
+
+  document.getElementById("start").addEventListener("click", function() {
+    startGame();
+  });
+
+  document.getElementById("again").addEventListener("click", function() {
+    startGame();
+  });
+
+  document.getElementById("home").addEventListener("click", function() {
+    show("home");
+  });
+
+  document.getElementById("quit").addEventListener("click", function() {
+    show("home");
+  });
+
+});
 </body>
 </html>
