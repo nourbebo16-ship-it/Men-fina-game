@@ -288,9 +288,9 @@ grid-template-columns:1fr;
 
 </div>
 
-<button class="start" id="start" onclick="startGame()">
+<button class="start" id="start" 
 ابدأ الجولة 🚀
-</button>
+<button/>
 
 </div>
 
@@ -1004,10 +1004,9 @@ document
 showScreen("home");
 }
 );
-   document.getElementById("start").onclick = function () {
-  startGame();
-};
-alert("JavaScript شغال ✅");
+window.addEventListener("load", function () {
+  document.getElementById("start").addEventListener("click", startGame);
+});
 </script>
 
 </body>
