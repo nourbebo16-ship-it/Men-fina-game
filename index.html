@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مين فينا؟</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #17113b, #5b21b6, #be185d);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .game {
+      width: 100%;
+      max-width: 520px;
+      padding: 20px;
+    }
+
+    .screen {
+      display: none;
+      text-align: center;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .title {
+      font-size: 55px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #ddd;
+      margin-bottom: 25px;
+      line-height: 1.7;
+    }
+
+    .card {
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 25px;
+      padding: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.25);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 15px;
+      padding: 15px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      background: #25204d;
+    }
+
+    button.selected {
+      background: #7c3aed;
+      outline: 3px solid rgba(255,255,255,.25);
+    }
+
+    .start {
+      width: 100%;
+      background: linear-gradient(135deg,#7c3aed,#ec4899);
+      font-size: 20px;
+      padding: 17px;
+    }
+
+    .levels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .level {
+      text-align: right;
+    }
+
+    .level small {
+      display: block;
+      color: #bbb;
+      margin-top: 5px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+
+    .progress {
+      height: 8px;
+      background: rgba(255,255,255,.2);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #fff;
+      transition: .3s;
+    }
+
+    .difficulty {
+      display: inline-block;
+      background: #7c3aed;
+      border-radius: 50px;
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+
+    .question {
+      font-size: 30px;
+      line-height: 1.5;
+      margin: 25px 0;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .answer {
+      min-height: 65px;
+      background: #17132f;
+    }
+
+    .result-score {
+      font-size: 60px;
+      font-weight: 900;
+      margin: 15px 0;
+    }
+
+    .result-buttons {
+      display: grid;
+      gap: 10px;
+    }
+
+    @media(max-width:400px) {
+      .title {
+        font-size: 43px;
+      }
+
+      .question {
+        font-size: 25px;
+      }
+
+      .answers,
+      .levels {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="game">
+
+  <!-- الصفحة الرئيسية -->
+  <section id="home" class="screen active">
+
+    <div class="title">مين فينا؟</div>
+
+    <p class="subtitle">
+      لعبة اجتماعية سريعة 🔥<br>
+      اختاروا مين ينطبق عليه السؤال!
+    </p>
+
+    <div class="card">
+
+      <h2>عدد الأسئلة</h2>
+
+      <div class="buttons">
+        <button class="count selected" data-count="6">
+          6 أسئلة
+        </button>
+
+        <button class="count" data-count="10">
+          10 أسئلة
+        </button>
+      </div>
+
+      <h2>اختار المرحلة</h2>
+
+      <div class="levels">
+
+        <button class="level selected" data-level="1">
+          🟢 المستوى 1
+          <small>سهل</small>
+        </button>
+
+        <button class="level" data-level="2">
+          🟡 المستوى 2
+          <small>متوسط</small>
+        </button>
+
+        <button class="level" data-level="3">
+          🟠 المستوى 3
+          <small>صعب</small>
+        </button>
+
+        <button class="level" data-level="4">
+          🔴 المستوى 4
+          <small>تحدي</small>
+        </button>
+
+        <button class="level" data-level="5">
+          🔥 المستوى 5
+          <small>أسطوري</small>
+        </button>
+
+      </div>
+
+      <button id="start" class="start">
+        ابدأ الجولة 🚀
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- اللعبة -->
+
+  <section id="game" class="screen">
+
+    <div class="top">
+
+      <span id="questionNumber">
+        السؤال 1
+      </span>
+
+      <span id="score">
+        0 نقطة
+      </span>
+
+    </div>
+
+    <div class="progress">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <div class="card">
+
+      <span id="difficulty" class="difficulty">
+        سهل
+      </span>
+
+      <div id="question" class="question">
+        السؤال
+      </div>
+
+      <div id="answers" class="answers"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- النتيجة -->
+
+  <section id="result" class="screen">
+
+    <div class="card">
+
+      <h1>🎉 خلصت الجولة!</h1>
+
+      <div id="finalScore" class="result-score">
+        0
+      </div>
+
+      <p id="message"></p>
+
+      <p id="stats"></p>
+
+      <div class="result-buttons">
+
+        <button id="again" class="start">
+          🔄 جولة جديدة
+        </button>
+
+        <button id="home">
+          🏠 الرئيسية
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<script>
+
+const questions = [
+
+  /* المستوى 1 */
+
+  {
+    level:1,
+    text:"مين فينا أكتر واحد بيتأخر على المواعيد؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:10
+  },
+
+  {
+    level:1,
+    text:"مين فينا بيحب النوم أكتر؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:10
+  },
+
+  {
+    level:1,
+    text:"مين فينا بيضحك أكتر؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:10
+  },
+
+  {
+    level:1,
+    text:"مين فينا بيحب الأكل أكتر؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:10
+  },
+
+  {
+    level:1,
+    text:"مين فينا بينسى حاجته أكتر؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:10
+  },
+
+  {
+    level:1,
+    text:"مين فينا بيسهر أكتر؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:10
+  },
+
+
+  /* المستوى 2 */
+
+  {
+    level:2,
+    text:"مين فينا لو كسب فلوس فجأة هيصرفها أسرع؟",
+    answers:["أنا","إنت","الاتنين","حسب المبلغ"],
+    points:20
+  },
+
+  {
+    level:2,
+    text:"مين فينا ممكن يغير رأيه عشان كل الناس عكسه؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:20
+  },
+
+  {
+    level:2,
+    text:"مين فينا يقدر يحفظ سر أطول؟",
+    answers:["أنا","إنت","الاتنين","مش مضمون"],
+    points:20
+  },
+
+  {
+    level:2,
+    text:"مين فينا ممكن يبدأ مشروع ويزهق منه؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:20
+  },
+
+
+  /* المستوى 3 */
+
+  {
+    level:3,
+    text:"مين فينا ممكن يقول الحقيقة حتى لو هتعمل مشكلة؟",
+    answers:["أنا","إنت","الاتنين","حسب الموقف"],
+    points:30
+  },
+
+  {
+    level:3,
+    text:"مين فينا أصعب في الاعتذار؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:30
+  },
+
+  {
+    level:3,
+    text:"مين فينا ممكن يضحي بمصلحته عشان صاحبه؟",
+    answers:["أنا","إنت","الاتنين","مش دايمًا"],
+    points:30
+  },
+
+  {
+    level:3,
+    text:"مين فينا لو فشل هيرجع يحاول؟",
+    answers:["أنا","إنت","الاتنين","حسب الفشل"],
+    points:30
+  },
+
+
+  /* المستوى 4 */
+
+  {
+    level:4,
+    text:"مين فينا ممكن يرفض فرصة ممتازة بسبب مبدأ؟",
+    answers:["أنا","إنت","الاتنين","حسب الفرصة"],
+    points:40
+  },
+
+  {
+    level:4,
+    text:"مين فينا ممكن يغير حياته بقرار واحد؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:40
+  },
+
+  {
+    level:4,
+    text:"مين فينا يقدر يكسب نقاش وهو مش الصح؟",
+    answers:["أنا","إنت","الاتنين","الاتنين ممكن"],
+    points:40
+  },
+
+
+  /* المستوى 5 */
+
+  {
+    level:5,
+    text:"مين فينا ممكن يختار خسارة النهارده عشان يكسب بعد سنة؟",
+    answers:["أنا","إنت","الاتنين","ولا واحد"],
+    points:50
+  },
+
+  {
+    level:5,
+    text:"مين فينا ممكن يواجه الكل لو شايفهم غلط؟",
+    answers:["أنا","إنت","الاتنين","حسب الموضوع"],
+    points:50
+  },
+
+  {
+    level:5,
+    text:"مين فينا أصعب شخص تتوقع رد فعله؟",
+    answers:["أنا","إنت","الاتنين","الاتنين"],
+    points:50
+  }
+
+];
+
+
+let selectedCount = 6;
+let selectedLevel = 1;
+
+let roundQuestions = [];
+let current = 0;
+let totalScore = 0;
+
+
+/* اختيار عدد الأسئلة */
+
+document.querySelectorAll(".count").forEach(button => {
+
+  button.onclick = () => {
+
+    document.querySelectorAll(".count")
+      .forEach(b => b.classList.remove("selected"));
+
+    button.classList.add("selected");
+
+    selectedCount =
+      Number(button.dataset.count);
+
+  };
+
+});
+
+
+/* اختيار المستوى */
+
+document.querySelectorAll(".level").forEach(button => {
+
+  button.onclick = () => {
+
+    document.querySelectorAll(".level")
+      .forEach(b => b.classList.remove("selected"));
+
+    button.classList.add("selected");
+
+    selectedLevel =
+      Number(button.dataset.level);
+
+  };
+
+});
+
+
+/* خلط */
+
+function shuffle(array){
+
+  return [...array].sort(
+    () => Math.random() - .5
+  );
+
+}
+
+
+/* بداية اللعبة */
+
+document.getElementById("start").onclick = startGame;
+
+function startGame(){
+
+  let pool =
+    questions.filter(
+      q => q.level <= selectedLevel
+    );
+
+
+  /*
+    كلما زاد المستوى،
+    نفضل الأسئلة الخاصة به
+  */
+
+  let exact =
+    shuffle(
+      pool.filter(
+        q => q.level === selectedLevel
+      )
+    );
+
+  let lower =
+    shuffle(
+      pool.filter(
+        q => q.level < selectedLevel
+      )
+    );
+
+
+  roundQuestions =
+    [...exact, ...lower]
+    .slice(0, selectedCount);
+
+
+  /*
+    لو عدد الأسئلة غير كافي
+  */
+
+  if(roundQuestions.length < selectedCount){
+
+    roundQuestions =
+      shuffle(questions)
+      .slice(0, selectedCount);
+
+  }
+
+
+  roundQuestions =
+    shuffle(roundQuestions);
+
+
+  current = 0;
+  totalScore = 0;
+
+  showScreen("game");
+
+  showQuestion();
+
+}
+
+
+/* عرض السؤال */
+
+function showQuestion(){
+
+  const q =
+    roundQuestions[current];
+
+
+  document.getElementById("questionNumber")
+    .textContent =
+    `السؤال ${current+1} من ${roundQuestions.length}`;
+
+
+  document.getElementById("score")
+    .textContent =
+    `${totalScore} نقطة`;
+
+
+  document.getElementById("progressBar")
+    .style.width =
+    `${(current / roundQuestions.length)*100}%`;
+
+
+  const names =
+    ["","سهل","متوسط","صعب","تحدي","أسطوري"];
+
+
+  document.getElementById("difficulty")
+    .textContent =
+    names[q.level];
+
+
+  document.getElementById("question")
+    .textContent =
+    q.text;
+
+
+  const answers =
+    document.getElementById("answers");
+
+
+  answers.innerHTML = "";
+
+
+  shuffle(q.answers).forEach(answer => {
+
+    const button =
+      document.createElement("button");
+
+    button.className = "answer";
+
+    button.textContent = answer;
+
+    button.onclick = () =>
+      chooseAnswer(q);
+
+
+    answers.appendChild(button);
+
+  });
+
+}
+
+
+/* الإجابة */
+
+function chooseAnswer(q){
+
+  /*
+    مفيش نتيجة بعد السؤال.
+    بنحسب النقاط في الخلفية فقط.
+  */
+
+  totalScore += q.points;
+
+  current++;
+
+
+  if(current >= roundQuestions.length){
+
+    finishGame();
+
+  }else{
+
+    showQuestion();
+
+  }
+
+}
+
+
+/* النتيجة */
+
+function finishGame(){
+
+  document.getElementById("progressBar")
+    .style.width = "100%";
+
+
+  const maxScore =
+    roundQuestions.reduce(
+      (sum,q) => sum + q.points,
+      0
+    );
+
+
+  const percent =
+    Math.round(
+      totalScore / maxScore * 100
+    );
+
+
+  document.getElementById("finalScore")
+    .textContent =
+    `${totalScore} نقطة`;
+
+
+  document.getElementById("stats")
+    .textContent =
+    `${roundQuestions.length} أسئلة • إنجاز ${percent}%`;
+
+
+  let message;
+
+
+  if(percent >= 90){
+
+    message =
+      "🔥 أسطوري! المستوى ده مش سهل.";
+
+  }else if(percent >= 70){
+
+    message =
+      "👏 جامد جدًا! جرب مستوى أصعب.";
+
+  }else{
+
+    message =
+      "😎 جولة حلوة... المرة الجاية نكسر الرقم.";
+
+  }
+
+
+  document.getElementById("message")
+    .textContent =
+    message;
+
+
+  showScreen("result");
+
+}
+
+
+/* التنقل */
+
+function showScreen(id){
+
+  document.querySelectorAll(".screen")
+    .forEach(screen =>
+      screen.classList.remove("active")
+    );
+
+
+  document.getElementById(id)
+    .classList.add("active");
+
+}
+
+
+/* إعادة اللعب */
+
+document.getElementById("again").onclick =
+  startGame;
+
+
+document.getElementById("home").onclick =
+  () => showScreen("home");
+
+
+</script>
+
+</body>
+  </html>
